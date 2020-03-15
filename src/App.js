@@ -1,5 +1,6 @@
 import React from "react";
+import ListWrapper from "./components/ListWrapper/ListWrapper";
 
-const App = () => <h1>Hello world</h1>;
+const App = () => <ListWrapper />;
 
 export default App;
