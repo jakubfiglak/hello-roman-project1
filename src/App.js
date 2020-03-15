@@ -19,7 +19,7 @@ class App extends Component {
     };
 
     this.setState(prevState => ({
-      items: [...prevState, newItem]
+      items: [...prevState.items, newItem]
     }));
 
     e.target.reset();
