@@ -2,12 +2,20 @@ import React from "react";
 import ListItem from "./ListItem";
 import styles from "./List.module.scss";
 
-const ListWrapper = props => (
-  <ul className={styles.wrapper}>
-    {props.items.map(item => (
-      <ListItem key={item.name} {...item} />
-    ))}
-  </ul>
+const ListWrapper = ({ items }) => (
+  <>
+    {items.length ? (
+      <ul className={styles.wrapper}>
+        {items.map(item => (
+          <ListItem key={item.title} {...item} />
+        ))}
+      </ul>
+    ) : (
+      <h1 class={styles.noItems}>
+        There's nothing here, please add your first item!
+      </h1>
+    )}
+  </>
 );
 
 export default ListWrapper;

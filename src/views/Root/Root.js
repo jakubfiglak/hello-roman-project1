@@ -1,6 +1,6 @@
 import React, { Component } from "react";
+import AppContext from "../../context";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { twitterAccounts } from "../../data/twitterAccounts";
 import TwittersView from "../TwittersView/TwittersView";
 import ArticlesView from "../ArticlesView/ArticlesView";
 import NotesView from "../NotesView/NotesView";
@@ -9,25 +9,20 @@ import Modal from "../../components/Modal/Modal";
 
 class Root extends Component {
   state = {
-    items: [...twitterAccounts],
-    isModalOpen: true
+    twitter: [],
+    article: [],
+    note: [],
+    isModalOpen: false
   };
 
-  addItem = e => {
+  addItem = (e, newItem) => {
     e.preventDefault();
 
-    const newItem = {
-      name: e.target.name.value,
-      twitterLink: e.target.link.value,
-      image: e.target.image.value,
-      description: e.target.description.value
-    };
-
     this.setState(prevState => ({
-      items: [...prevState.items, newItem]
+      [newItem.type]: [...prevState[newItem.type], newItem]
     }));
 
-    e.target.reset();
+    this.closeModal();
   };
 
   openModal = () => {
@@ -44,19 +39,22 @@ class Root extends Component {
 
   render() {
     const { isModalOpen } = this.state;
+    const contextElements = {
+      ...this.state,
+      addItem: this.addItem
+    };
 
     return (
       <BrowserRouter>
-        <>
+        <AppContext.Provider value={contextElements}>
           <Header openModalFn={this.openModal} />
-          <h1>Hello world</h1>
           <Switch>
             <Route exact path="/" component={TwittersView} />
             <Route path="/articles" component={ArticlesView} />
             <Route path="/notes" component={NotesView} />
           </Switch>
           {isModalOpen && <Modal closeModalFn={this.closeModal} />}
-        </>
+        </AppContext.Provider>
       </BrowserRouter>
     );
   }
