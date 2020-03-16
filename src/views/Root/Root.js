@@ -10,7 +10,7 @@ import Modal from "../../components/Modal/Modal";
 class Root extends Component {
   state = {
     items: [...twitterAccounts],
-    isModalOpen: false
+    isModalOpen: true
   };
 
   addItem = e => {
